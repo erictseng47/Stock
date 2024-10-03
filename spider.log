@@ -1,0 +1,8 @@
+2024-10-03 11:04:22,747 - INFO - 開始執行爬蟲程序<STAR>
+2024-10-03 11:04:23,129 - INFO - 已將 30 條新聞存儲為 /Users/pengshintsz/Desktop/Eric/DataScience/Test/cnyes_news.csv
+2024-10-03 11:04:23,138 - INFO - 已將 30 條新聞存儲到 SQLite 數據庫 /Users/pengshintsz/Desktop/Eric/DataScience/Test/cnyes_news.db
+2024-10-03 11:04:23,138 - INFO - 爬蟲程序執行完成<END>
+2024-10-03 11:06:47,990 - INFO - 開始執行爬蟲程序<STAR>
+2024-10-03 11:06:48,395 - INFO - 已將 30 條新聞存儲為 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.csv
+2024-10-03 11:06:48,403 - INFO - 已將 30 條新聞存儲到 SQLite 數據庫 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.db
+2024-10-03 11:06:48,403 - INFO - 爬蟲程序執行完成<END>
