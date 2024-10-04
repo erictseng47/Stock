@@ -22,7 +22,7 @@ def setup_logger(log_file_name='spider.log'):
 logger = setup_logger()
 
 def log_start():
-    logger.info("開始執行爬蟲程序<STAR>")
+    logger.info("開始執行爬蟲程序<START>")
 
 def log_end():
     logger.info("爬蟲程序執行完成<END>")
