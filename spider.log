@@ -6,3 +6,7 @@
 2024-10-03 11:06:48,395 - INFO - 已將 30 條新聞存儲為 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.csv
 2024-10-03 11:06:48,403 - INFO - 已將 30 條新聞存儲到 SQLite 數據庫 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.db
 2024-10-03 11:06:48,403 - INFO - 爬蟲程序執行完成<END>
+2024-10-05 13:40:00,735 - INFO - 開始執行爬蟲程序<START>
+2024-10-05 13:40:01,059 - INFO - 已將 30 條新聞追加到 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.csv
+2024-10-05 13:40:01,061 - INFO - 已將 30 條新聞存儲到 SQLite 數據庫 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.db
+2024-10-05 13:40:01,061 - INFO - 已添加 30 條新聞

@@ -30,18 +30,21 @@ class CnyesNewsSpider:
             return None
 
     def save_news_to_csv(self, newslist_info: List[Dict], filename: str = 'cnyes_news.csv') -> None:
-        """將新聞列表存儲為 CSV 檔案"""
+        """將新聞列表追加到 CSV 檔案"""
         file_path = os.path.join(current_dir, filename)
         fieldnames = ['newsId', 'url', 'title', 'content', 'summary', 'keyword', 'publishAt', 'categoryName', 'categoryId']
         
-        with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+        file_exists = os.path.isfile(file_path)
+        
+        with open(file_path, 'a', newline='', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
+            if not file_exists:
+                writer.writeheader()
             for news in newslist_info:
                 news['url'] = f"https://news.cnyes.com/news/id/{news['newsId']}"
                 writer.writerow({field: self._process_field(news.get(field, '')) for field in fieldnames})
         
-        logger.info(f"已將 {len(newslist_info)} 條新聞存儲為 {file_path}")
+        logger.info(f"已將 {len(newslist_info)} 條新聞追加到 {file_path}")
 
     def save_news_to_sqlite(self, newslist_info: List[Dict], db_name: str = 'cnyes_news.db') -> None:
         """將新聞列表存儲到 SQLite 數據庫"""
@@ -88,13 +91,36 @@ class CnyesNewsSpider:
             return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(value))
         return str(value)
 
+    def is_news_exists(self, news_id: int, db_name: str = 'cnyes_news.db') -> bool:
+        """檢查新聞是否已存在於數據庫中"""
+        db_path = os.path.join(current_dir, db_name)
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT 1 FROM news WHERE newsId = ?", (news_id,))
+        exists = cursor.fetchone() is not None
+        
+        conn.close()
+        return exists
+
 def main():
     log_start()
     spider = CnyesNewsSpider()
-    newslist_info = spider.get_newslist_info()
-    if newslist_info:
-        spider.save_news_to_csv(newslist_info)
-        spider.save_news_to_sqlite(newslist_info)
+    
+    while True:
+        newslist_info = spider.get_newslist_info()
+        if newslist_info:
+            new_news = [news for news in newslist_info if not spider.is_news_exists(news['newsId'])]
+            if new_news:
+                spider.save_news_to_csv(new_news)
+                spider.save_news_to_sqlite(new_news)
+                logger.info(f"已添加 {len(new_news)} 條新聞")
+            else:
+                logger.info("沒有新的新聞")
+        
+        # 等待一段時間再次獲取新聞，例如每小時獲取一次
+        time.sleep(3600)
+    
     log_end()
 
 if __name__ == "__main__":
