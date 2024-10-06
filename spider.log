@@ -10,3 +10,13 @@
 2024-10-05 13:40:01,059 - INFO - 已將 30 條新聞追加到 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.csv
 2024-10-05 13:40:01,061 - INFO - 已將 30 條新聞存儲到 SQLite 數據庫 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.db
 2024-10-05 13:40:01,061 - INFO - 已添加 30 條新聞
+2024-10-06 15:07:09,751 - INFO - 開始執行爬蟲程序<START>
+2024-10-06 15:07:10,266 - INFO - 已将 14 条新闻追加到 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.csv
+2024-10-06 15:07:10,269 - INFO - 已将 14 条新闻存储到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/cnyes_news.db
+2024-10-06 15:07:10,269 - INFO - 已添加 14 条新闻
+2024-10-06 15:07:58,450 - INFO - 程序被用户中断
+2024-10-06 15:07:58,452 - INFO - 爬蟲程序執行完成<END>
+2024-10-06 15:14:49,679 - INFO - 開始執行爬蟲程序<START>
+2024-10-06 15:14:50,016 - INFO - 没有新的新闻
+2024-10-06 15:14:58,680 - INFO - 程序被用户中断
+2024-10-06 15:14:58,681 - INFO - 爬蟲程序執行完成<END>
