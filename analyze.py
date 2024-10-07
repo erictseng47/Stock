@@ -9,16 +9,19 @@ import logging
 from bs4 import BeautifulSoup
 
 class NewsAnalyzer:
-    def __init__(self, file_path: str = 'cnyes_news.csv'):
-        self.file_path = file_path
-        self.df = None
-        self.font = self.get_font()
-        plt.rcParams['axes.unicode_minus'] = False
-        sns.set(style="whitegrid")
-        self.setup_logging()
+    def __init__(self):
+        self.data = None
+
+    def read_csv_file(self, file_path):
+        try:
+            self.data = pd.read_csv(file_path)
+            logger.info(f"成功读取 CSV 文件：{file_path}")
+        except Exception as e:
+            logger.error(f"读取 CSV 文件时出错：{str(e)}")
+            raise
 
     def setup_logging(self):
-        log_dir = 'analysis_results'
+        log_dir = 'output'
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         logging.basicConfig(filename=os.path.join(log_dir, 'analysis.log'),
@@ -41,32 +44,19 @@ class NewsAnalyzer:
             logging.warning("无法加载指定字体，使用系统默认字体")
             return FontProperties(size=10)
 
-    def read_csv_file(self) -> Optional[pd.DataFrame]:
-        """读取 CSV 文件并返回 DataFrame"""
-        try:
-            self.df = pd.read_csv(self.file_path)
-            return self.df
-        except FileNotFoundError:
-            logging.error(f"错误: 找不到文件 '{self.file_path}'")
-        except pd.errors.EmptyDataError:
-            logging.error(f"错误: 文件 '{self.file_path}' 是空的")
-        except pd.errors.ParserError:
-            logging.error(f"错误: 无法解析文件 '{self.file_path}'")
-        return None
-
     def preprocess_data(self):
         """预处理数据"""
-        self.df['publishAt'] = pd.to_datetime(self.df['publishAt'])
+        self.data['publishAt'] = pd.to_datetime(self.data['publishAt'])
         for col in ['title', 'content', 'summary']:
-            self.df[f'{col}_length'] = self.df[col].str.len()
+            self.data[f'{col}_length'] = self.data[col].str.len()
         
         # Clean the content column
-        self.df['cleaned_content'] = self.df['content'].apply(lambda x: BeautifulSoup(x, "html.parser").get_text())
+        self.data['cleaned_content'] = self.data['content'].apply(lambda x: BeautifulSoup(x, "html.parser").get_text())
 
     def plot_category_distribution(self, ax):
         """绘制新闻类别分布图"""
-        top_categories = self.df['categoryName'].value_counts().nlargest(10).index
-        sns.countplot(y='categoryName', data=self.df[self.df['categoryName'].isin(top_categories)], 
+        top_categories = self.data['categoryName'].value_counts().nlargest(10).index
+        sns.countplot(y='categoryName', data=self.data[self.data['categoryName'].isin(top_categories)], 
                       order=top_categories, ax=ax)
         ax.set_title('前10新闻类别分布', fontsize=12, fontproperties=self.font)
         ax.set_xlabel('数量', fontsize=10, fontproperties=self.font)
@@ -77,8 +67,8 @@ class NewsAnalyzer:
 
     def plot_text_length_distribution(self, ax):
         """绘制文本长度分布图"""
-        sns.histplot(self.df['title_length'], bins=20, kde=True, color='blue', label='标题长度', ax=ax)
-        sns.histplot(self.df['summary_length'], bins=20, kde=True, color='red', label='摘要长度', ax=ax)
+        sns.histplot(self.data['title_length'], bins=20, kde=True, color='blue', label='标题长度', ax=ax)
+        sns.histplot(self.data['summary_length'], bins=20, kde=True, color='red', label='摘要长度', ax=ax)
         ax.set_title('文本长度分布', fontsize=12, fontproperties=self.font)
         ax.set_xlabel('文本长度', fontsize=10, fontproperties=self.font)
         ax.set_ylabel('频率', fontsize=10, fontproperties=self.font)
@@ -86,7 +76,7 @@ class NewsAnalyzer:
 
     def plot_publish_date_distribution(self, ax):
         """绘制发布日期分布图"""
-        self.df['publishAt'].hist(bins=20, color='purple', ax=ax)
+        self.data['publishAt'].hist(bins=20, color='purple', ax=ax)
         ax.set_title('发布日期分布', fontsize=12, fontproperties=self.font)
         ax.set_xlabel('发布日期', fontsize=10, fontproperties=self.font)
         ax.set_ylabel('频率', fontsize=10, fontproperties=self.font)
@@ -94,8 +84,8 @@ class NewsAnalyzer:
 
     def plot_content_length_distribution(self, ax):
         """绘制内容长度箱型图"""
-        top_categories = self.df['categoryName'].value_counts().nlargest(5).index
-        sns.boxplot(x='categoryName', y='content_length', data=self.df[self.df['categoryName'].isin(top_categories)], ax=ax)
+        top_categories = self.data['categoryName'].value_counts().nlargest(5).index
+        sns.boxplot(x='categoryName', y='content_length', data=self.data[self.data['categoryName'].isin(top_categories)], ax=ax)
         ax.set_title('前5类别内容长度分布', fontsize=12, fontproperties=self.font)
         ax.set_xlabel('类别名称', fontsize=10, fontproperties=self.font)
         ax.set_ylabel('内容长度', fontsize=10, fontproperties=self.font)
@@ -115,7 +105,7 @@ class NewsAnalyzer:
 
         plt.tight_layout()
         
-        save_path = 'analysis_results/news_analysis.png'
+        save_path = 'output/DashBoard.png'
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         logging.info(f"图表已保存至 '{save_path}'")
@@ -124,12 +114,12 @@ class NewsAnalyzer:
 
     def analyse_data(self):
         """分析数据并输出结果"""
-        if self.df is not None:
+        if self.data is not None:
             logging.info("数据分析开始:")
-            logging.info(f"总行数: {len(self.df)}")
-            logging.info(f"列名: {', '.join(self.df.columns)}")
-            logging.info("\n前5行数据:\n%s", self.df.head().to_string())
-            logging.info("\n基本统计信息:\n%s", self.df.describe(include='all').to_string())
+            logging.info(f"总行数: {len(self.data)}")
+            logging.info(f"列名: {', '.join(self.data.columns)}")
+            logging.info("\n前5行数据:\n%s", self.data.head().to_string())
+            logging.info("\n基本统计信息:\n%s", self.data.describe(include='all').to_string())
             
             self.preprocess_data()
             self.plot_all_distributions()
