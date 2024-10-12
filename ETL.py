@@ -1,14 +1,15 @@
+from typing import List, Dict, Optional
+from Logger import setup_logger
+from html import unescape
+
 import csv
 import requests
 import time
 import os
-from typing import List, Dict, Optional
 import sqlite3
 import json
-from Logger import setup_logger
 import pandas as pd
 import re
-from html import unescape
 
 # 设置logger
 logger = setup_logger()
@@ -16,7 +17,7 @@ logger = setup_logger()
 # 获取项目根目录
 project_root = os.path.dirname(os.path.abspath(__file__))
 
-class CnyesNewsETL:
+class ETL:
     BASE_URL = "https://api.cnyes.com/media/api/v1/newslist/category/headline"
     HEADERS = {
         'Origin': 'https://news.cnyes.com/',
@@ -55,7 +56,7 @@ class CnyesNewsETL:
             logger.error(f'提取数据失败: {e}')
             return None
 
-    def clean_text(self, text: str) -> str:
+    def Clean_text(self, text: str) -> str:
         """清理文本，移除HTML标签和特殊字符"""
         # 解码HTML实体
         text = unescape(text)
@@ -72,12 +73,12 @@ class CnyesNewsETL:
             transformed_news = {
                 'newsId': news.get('newsId'),
                 'url': f"https://news.cnyes.com/news/id/{news.get('newsId')}",
-                'title': self.clean_text(news.get('title', '')),
-                'content': self.clean_text(news.get('content', '')),
-                'summary': self.clean_text(news.get('summary', '')),
+                'title': self.Clean_text(news.get('title', '')),
+                'content': self.Clean_text(news.get('content', '')),
+                'summary': self.Clean_text(news.get('summary', '')),
                 'keyword': self._process_field(news.get('keyword')),
                 'publishAt': self._process_field(news.get('publishAt')),
-                'categoryName': self.clean_text(news.get('categoryName', '')),
+                'categoryName': self.Clean_text(news.get('categoryName', '')),
                 'categoryId': news.get('categoryId')
             }
             transformed_data.append(transformed_news)
@@ -164,5 +165,5 @@ class CnyesNewsETL:
 
 # 使用示例
 if __name__ == "__main__":
-    etl = CnyesNewsETL()
+    etl = ETL()
     etl.run_etl()

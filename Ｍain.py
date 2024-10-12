@@ -1,6 +1,7 @@
-from ETL import CnyesNewsETL
+from ETL import ETL
 from Logger import setup_logger, log_start, log_end
 from analyze import NewsAnalyzer
+
 import argparse
 import os
 
@@ -11,14 +12,14 @@ project_root = os.path.dirname(os.path.abspath(__file__))
 logger = setup_logger()
 
 def ensure_directories():
-    etl = CnyesNewsETL()
+    etl = ETL()
     etl.ensure_store_directory()
     os.makedirs(os.path.join(project_root, 'output'), exist_ok=True)
 
 def run_etl_and_analyze():
     log_start()
     ensure_directories()
-    etl = CnyesNewsETL()
+    etl = ETL()
     analyzer = NewsAnalyzer()
     
     try:
