@@ -1,7 +1,6 @@
 from ETL import ETL
 from Logger import setup_logger, log_start, log_end
 from analyze import NewsAnalyzer
-
 import argparse
 import os
 
