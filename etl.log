@@ -120,3 +120,33 @@
 2024-10-12 14:28:54,788 - INFO - ETL流程完成
 2024-10-12 14:28:54,793 - ERROR - 运行过程中发生错误: name 'logger' is not defined
 2024-10-12 14:28:54,793 - INFO - <END>
+2024-10-12 14:44:31,232 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/cnyes_news.db
+2024-10-12 14:44:31,496 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-12 14:44:31,499 - INFO - 已将 30 条新闻加载到 /Users/pengshintsz/Desktop/Eric/Stock/Store/cnyes_news.csv
+2024-10-12 14:44:31,506 - INFO - 成功将 30 条新闻加载到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/Store/cnyes_news.db
+2024-10-12 14:44:31,506 - INFO - ETL流程完成
+2024-10-12 14:48:10,669 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:48:11,231 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-12 14:48:11,235 - INFO - 已将 30 条新闻加载到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.csv
+2024-10-12 14:48:11,239 - INFO - 成功将 30 条新闻加载到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:48:11,239 - INFO - ETL流程完成
+2024-10-12 14:50:05,329 - INFO - <START>
+2024-10-12 14:50:05,330 - INFO - 创建Store目录：/Users/pengshintsz/Desktop/Eric/Stock/Store
+2024-10-12 14:50:05,330 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:50:05,330 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:50:05,503 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-12 14:50:05,508 - INFO - 已将 30 条新闻加载到 /Users/pengshintsz/Desktop/Eric/Stock/Store/cnyes_news.csv
+2024-10-12 14:50:05,513 - INFO - 成功将 30 条新闻加载到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:50:05,513 - INFO - ETL流程完成
+2024-10-12 14:50:05,518 - ERROR - 运行过程中发生错误: name 'logger' is not defined
+2024-10-12 14:50:05,518 - INFO - <END>
+2024-10-12 14:52:49,662 - INFO - <START>
+2024-10-12 14:52:49,663 - INFO - 创建Store目录：/Users/pengshintsz/Desktop/Eric/Stock/Store
+2024-10-12 14:52:49,663 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:52:49,663 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:52:49,854 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-12 14:52:49,858 - INFO - 已将 30 条新闻加载到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.csv
+2024-10-12 14:52:49,863 - INFO - 成功将 30 条新闻加载到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-12 14:52:49,863 - INFO - ETL流程完成
+2024-10-12 14:52:49,867 - ERROR - 运行过程中发生错误: name 'logger' is not defined
+2024-10-12 14:52:49,867 - INFO - <END>

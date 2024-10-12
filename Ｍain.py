@@ -22,8 +22,8 @@ def run_etl_and_analyze():
     analyzer = NewsAnalyzer()
     
     try:
-        csv_file_path = os.path.join(project_root, 'Store', 'cnyes_news.csv')
-        etl.run_etl(csv_filename='cnyes_news.csv')
+        csv_file_path = os.path.join(project_root, 'Store', 'Transformed_data.csv')
+        etl.run_etl(csv_filename='Transformed_data.csv')
         
         # 执行数据分析并更新仪表板
         analyzer.read_csv_file(csv_file_path)
@@ -41,7 +41,7 @@ def main():
 
     if args.analyze:
         analyzer = NewsAnalyzer()
-        csv_file_path = os.path.join(project_root, 'Store', 'cnyes_news.csv')
+        csv_file_path = os.path.join(project_root, 'Store', 'Transformed_data.csv')
         analyzer.read_csv_file(csv_file_path)
         analyzer.analyse_data()
     else:

@@ -7,6 +7,8 @@ import sqlite3
 import json
 from Logger import setup_logger
 import pandas as pd
+import re
+from html import unescape
 
 # 设置logger
 logger = setup_logger()
@@ -24,7 +26,7 @@ class CnyesNewsETL:
 
     def __init__(self):
         self.ensure_store_directory()
-        self.db_path = os.path.join(project_root, 'Store', 'cnyes_news.db')
+        self.db_path = os.path.join(project_root, 'Store', 'Transformed_data.db')
         logger.info(f"数据库路径设置为：{self.db_path}")
 
     def ensure_store_directory(self):
@@ -53,6 +55,16 @@ class CnyesNewsETL:
             logger.error(f'提取数据失败: {e}')
             return None
 
+    def clean_text(self, text: str) -> str:
+        """清理文本，移除HTML标签和特殊字符"""
+        # 解码HTML实体
+        text = unescape(text)
+        # 移除HTML标签，包括 </p>
+        text = re.sub(r'<[^>]+>', '', text)
+        # 移除特殊字符，保留基本标点符号
+        text = re.sub(r'[^\w\s.,!?;:，。！？；：]', '', text)
+        return text.strip()
+
     def Transform(self, newslist_info: List[Dict]) -> List[Dict]:
         """转换：处理和清洗数据"""
         transformed_data = []
@@ -60,12 +72,12 @@ class CnyesNewsETL:
             transformed_news = {
                 'newsId': news.get('newsId'),
                 'url': f"https://news.cnyes.com/news/id/{news.get('newsId')}",
-                'title': news.get('title'),
-                'content': news.get('content'),
-                'summary': news.get('summary'),
+                'title': self.clean_text(news.get('title', '')),
+                'content': self.clean_text(news.get('content', '')),
+                'summary': self.clean_text(news.get('summary', '')),
                 'keyword': self._process_field(news.get('keyword')),
                 'publishAt': self._process_field(news.get('publishAt')),
-                'categoryName': news.get('categoryName'),
+                'categoryName': self.clean_text(news.get('categoryName', '')),
                 'categoryId': news.get('categoryId')
             }
             transformed_data.append(transformed_news)
@@ -131,7 +143,7 @@ class CnyesNewsETL:
             cursor.execute("SELECT 1 FROM news WHERE newsId = ?", (news_id,))
             return cursor.fetchone() is not None
 
-    def run_etl(self, page: int = 1, limit: int = 30, csv_filename: str = 'cnyes_news.csv'):
+    def run_etl(self, page: int = 1, limit: int = 30, csv_filename: str = 'Transformed_data.csv'):
         """运行完整的ETL流程"""
         # 提取
         raw_data = self.Extract(page, limit)
