@@ -9,6 +9,7 @@ import matplotlib.font_manager as fm
 import platform
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
+import matplotlib as mpl
 
 class SentimentAnalyzer:
     def __init__(self, csv_path):
@@ -16,6 +17,7 @@ class SentimentAnalyzer:
         self.df = None
         self.chinese_font = self.get_font()
         plt.rcParams['axes.unicode_minus'] = False
+        mpl.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans', 'Arial Unicode MS']
 
     @staticmethod
     def get_font():
@@ -85,18 +87,22 @@ class SentimentAnalyzer:
         plt.legend(title='情感', prop=self.chinese_font)
 
         plt.gca().set_yticklabels(plt.gca().get_yticklabels(), fontproperties=self.chinese_font)
+        
+        # 设置图例的字体
+        legend = plt.legend(title='情感', prop=self.chinese_font)
+        legend.get_title().set_fontproperties(self.chinese_font)
 
         plt.tight_layout()
 
         os.makedirs(output_dir, exist_ok=True)
-        plot_path = os.path.join(output_dir, 'sentiment_distribution.png')
+        plot_path = os.path.join(output_dir, 'Sentiment_distribution.png')
         plt.savefig(plot_path, dpi=300, bbox_inches='tight')
         print(f"情感分布图已保存为 '{plot_path}'")
         plt.close()
 
     def save_results(self, output_dir):
         os.makedirs(output_dir, exist_ok=True)
-        output_path = os.path.join(output_dir, 'cnyes_news_with_sentiment.csv')
+        output_path = os.path.join(output_dir, 'Sentiment_data.csv')
         self.df.to_csv(output_path, index=False, encoding='utf-8-sig')
         print(f"结果已保存到 '{output_path}'")
 
@@ -109,7 +115,7 @@ class SentimentAnalyzer:
 
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    csv_path = os.path.join(os.path.dirname(current_dir), 'cnyes_news.csv')
+    csv_path = os.path.join(os.path.dirname(current_dir), 'Store', 'Transformed_data.csv')
     output_dir = os.path.join(current_dir, 'output')
 
     analyzer = SentimentAnalyzer(csv_path)

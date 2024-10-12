@@ -1,7 +1,6 @@
 from typing import List, Dict, Optional
 from Logger import setup_logger
 from html import unescape
-
 import csv
 import requests
 import time
