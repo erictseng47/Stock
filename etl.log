@@ -150,3 +150,12 @@
 2024-10-12 14:52:49,863 - INFO - ETL流程完成
 2024-10-12 14:52:49,867 - ERROR - 运行过程中发生错误: name 'logger' is not defined
 2024-10-12 14:52:49,867 - INFO - <END>
+2024-10-13 16:10:22,806 - INFO - <START>
+2024-10-13 16:10:22,806 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-13 16:10:22,806 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-13 16:10:23,205 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-13 16:10:23,210 - INFO - 已将 30 条新闻加载到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.csv
+2024-10-13 16:10:23,215 - INFO - 成功将 30 条新闻加载到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-13 16:10:23,216 - INFO - ETL流程完成
+2024-10-13 16:10:23,221 - ERROR - 运行过程中发生错误: name 'logger' is not defined
+2024-10-13 16:10:23,221 - INFO - <END>
