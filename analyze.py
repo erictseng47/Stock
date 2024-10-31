@@ -5,29 +5,22 @@ from typing import Optional
 from matplotlib.font_manager import FontProperties
 import platform
 import os
-import logging
 from bs4 import BeautifulSoup
+from Logger import setup_logger, log_start, log_end
 
 class NewsAnalyzer:
     def __init__(self):
         self.data = None
+        self.logger = setup_logger('NewsAnalyzer')
+        self.font = self.get_font()
 
     def read_csv_file(self, file_path):
         try:
             self.data = pd.read_csv(file_path)
-            logger.info(f"成功读取 CSV 文件：{file_path}")
+            self.logger.info(f"成功读取 CSV 文件：{file_path}")
         except Exception as e:
-            logger.error(f"读取 CSV 文件时出错：{str(e)}")
+            self.logger.error(f"读取 CSV 文件时出错：{str(e)}")
             raise
-
-    def setup_logging(self):
-        log_dir = 'output'
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
-        logging.basicConfig(filename=os.path.join(log_dir, 'analysis.log'),
-                            level=logging.INFO,
-                            format='%(asctime)s - %(message)s',
-                            datefmt='%Y-%m-%d %H:%M:%S')
 
     @staticmethod
     def get_font():
@@ -41,7 +34,6 @@ class NewsAnalyzer:
         try:
             return FontProperties(fname=font_paths.get(system, ''), size=10)
         except:
-            logging.warning("无法加载指定字体，使用系统默认字体")
             return FontProperties(size=10)
 
     def preprocess_data(self):
@@ -108,27 +100,27 @@ class NewsAnalyzer:
         save_path = 'output/DashBoard.png'
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        logging.info(f"图表已保存至 '{save_path}'")
+        self.logger.info(f"图表已保存至 '{save_path}'")
         
         plt.show()
 
     def analyse_data(self):
         """分析数据并输出结果"""
         if self.data is not None:
-            logging.info("数据分析开始:")
-            logging.info(f"总行数: {len(self.data)}")
-            logging.info(f"列名: {', '.join(self.data.columns)}")
-            logging.info("\n前5行数据:\n%s", self.data.head().to_string())
-            logging.info("\n基本统计信息:\n%s", self.data.describe(include='all').to_string())
+            self.logger.info("数据分析开始:")
+            self.logger.info(f"总行数: {len(self.data)}")
+            self.logger.info(f"列名: {', '.join(self.data.columns)}")
+            self.logger.info(f"前5行数据:\n{self.data.head().to_string()}")
+            self.logger.info(f"基本统计信息:\n{self.data.describe(include='all').to_string()}")
             
             self.preprocess_data()
             self.plot_all_distributions()
         else:
-            logging.error("无法进行数据分析,因为 DataFrame 为空")
+            self.logger.error("无法进行数据分析,因为 DataFrame 为空")
 
 def main():
     analyzer = NewsAnalyzer()
-    analyzer.read_csv_file()
+    analyzer.read_csv_file('Store/Transformed_data.csv')
     analyzer.analyse_data()
 
 if __name__ == "__main__":

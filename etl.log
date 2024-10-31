@@ -158,4 +158,16 @@
 2024-10-13 16:10:23,215 - INFO - 成功将 30 条新闻加载到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
 2024-10-13 16:10:23,216 - INFO - ETL流程完成
 2024-10-13 16:10:23,221 - ERROR - 运行过程中发生错误: name 'logger' is not defined
-2024-10-13 16:10:23,221 - INFO - <END>
+2024-10-13 16:10:23,221 - INFO - <END>2024-10-31 16:56:13,071 - INFO - <START>
+2024-10-31 16:56:13,071 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-31 16:56:13,071 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-31 16:56:13,476 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-31 16:56:13,477 - ERROR - 运行过程中发生错误: argument of type 'NoneType' is not iterable
+2024-10-31 16:56:13,477 - INFO - <END>
+2024-10-31 17:00:29,138 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-31 17:00:29,530 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-31 17:03:20,234 - INFO - 数据库路径设置为：/Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-31 17:03:20,593 - INFO - 原始数据已保存到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Raw_data.csv
+2024-10-31 17:03:20,597 - INFO - 已将 30 条新闻加载到 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.csv
+2024-10-31 17:03:20,602 - INFO - 成功将 30 条新闻加载到 SQLite 数据库 /Users/pengshintsz/Desktop/Eric/Stock/Store/Transformed_data.db
+2024-10-31 17:03:20,602 - INFO - ETL流程完成

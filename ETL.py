@@ -57,6 +57,10 @@ class ETL:
 
     def Clean_text(self, text: str) -> str:
         """清理文本，移除HTML标签和特殊字符"""
+        # 首先检查是否为 None
+        if text is None:
+            return ''
+        
         # 解码HTML实体
         text = unescape(text)
         # 移除HTML标签，包括 </p>
